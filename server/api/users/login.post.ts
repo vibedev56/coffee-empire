@@ -14,7 +14,6 @@ export default defineEventHandler(async (event) => {
     console.log('Login request body:', body);
     const { login, password } = body;
 
-    // Load users.json via HTTP request for universal compatibility (Netlify & local)
     const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'http://localhost:3000';
     const res = await fetch(`${baseUrl}/users.json`);
     if (!res.ok) {
