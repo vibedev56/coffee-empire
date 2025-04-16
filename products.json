@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Espresso",
+    "status": "available",
+    "date_created": "2025-04-01",
+    "price": 150,
+    "brand": "Lavazza"
+  },
+  {
+    "id": 2,
+    "name": "Cappuccino",
+    "status": "available",
+    "date_created": "2025-04-02",
+    "price": 180,
+    "brand": "Illy"
+  },
+  {
+    "id": 3,
+    "name": "Latte",
+    "status": "available",
+    "date_created": "2025-04-03",
+    "price": 170,
+    "brand": "Julius Meinl"
+  },
+  {
+    "id": 4,
+    "name": "Americano",
+    "status": "available",
+    "date_created": "2025-04-04",
+    "price": 140,
+    "brand": "Starbucks"
+  },
+  {
+    "id": 5,
+    "name": "Mocha",
+    "status": "unavailable",
+    "date_created": "2025-04-05",
+    "price": 200,
+    "brand": "Nescafe"
+  },
+  {
+    "id": 6,
+    "name": "Flat White",
+    "status": "available",
+    "date_created": "2025-04-06",
+    "price": 190,
+    "brand": "Paulig"
+  },
+  {
+    "id": 7,
+    "name": "Macchiato",
+    "status": "available",
+    "date_created": "2025-04-07",
+    "price": 160,
+    "brand": "Tchibo"
+  },
+  {
+    "id": 8,
+    "name": "Ristretto",
+    "status": "unavailable",
+    "date_created": "2025-04-08",
+    "price": 155,
+    "brand": "Lavazza"
+  },
+  {
+    "id": 9,
+    "name": "Affogato",
+    "status": "available",
+    "date_created": "2025-04-09",
+    "price": 210,
+    "brand": "Illy"
+  },
+  {
+    "id": 10,
+    "name": "Irish Coffee",
+    "status": "available",
+    "date_created": "2025-04-10",
+    "price": 250,
+    "brand": "Bushmills"
+  }
+]
