@@ -24,20 +24,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
-import { useProductsStore } from '~/entities/product/model/productsStore'
+import { computed } from 'vue'
+import { useAsyncData } from '#app'
 import type { ProductFilters } from '~/entities/product/types'
-
 const props = defineProps<{ filter: ProductFilters }>()
 
-const store = useProductsStore()
-
-onMounted(() => {
-  if (!store.products.length) store.fetchProducts()
-})
+const { data: products = [] } = useAsyncData(
+  'products',
+  () => $fetch('/api/products')
+)
 
 const filteredProducts = computed(() => {
-  let result = store.products
+  let result = products.value || []
 
   if (props.filter.name?.length) {
     result = result.filter(p => props.filter.name!.includes(p.name))

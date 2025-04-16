@@ -24,19 +24,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
+import { useAsyncData } from '#app'
 import type { User } from '~/entities/user/types'
-import { useUsersStore } from '~/entities/user/model/usersStore'
 const props = defineProps<{ filter: { date?: string, roles?: string[] } }>()
 
-const store = useUsersStore()
-
-onMounted(() => {
-  if (!store.users.length) store.fetchUsers()
-})
+const { data: users = [] } = useAsyncData<User[]>(
+  'users',
+  () => $fetch('/api/users')
+)
 
 const filteredUsers = computed(() => {
-  let result = store.users
+  let result = users.value || []
   if (props.filter.date) {
     result = result.filter((u: User) => u.date_created.startsWith(props.filter.date ?? ""))
   }

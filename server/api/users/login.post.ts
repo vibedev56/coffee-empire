@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { defineEventHandler, readBody } from 'h3';
 
@@ -15,16 +15,13 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     console.log('Login request body:', body);
     const { login, password } = body;
-    const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     let users: User[] = [];
     try {
-      const res = await fetch(`${baseUrl}/users.json`);
-      if (!res.ok) {
-        return { success: false, error: 'users.json not found or unreadable' };
-      }
-      users = await res.json();
+      const usersPath = join(process.cwd(), 'static', 'users.json');
+      const file = await readFile(usersPath, 'utf-8');
+      users = JSON.parse(file);
     } catch (e) {
-      console.error('users.json fetch error:', e);
+      console.error('users.json read error:', e);
       return { success: false, error: 'users.json not found or unreadable' };
     }
     const user = users.find(u =>
