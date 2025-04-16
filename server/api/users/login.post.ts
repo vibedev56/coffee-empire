@@ -16,6 +16,17 @@ export default defineEventHandler(async (event) => {
     console.log('Login request body:', body);
     const { login, password } = body;
 
+    const { readdirSync } = await import('fs');
+    try {
+      console.log('Files in /var/task:', readdirSync('/var/task'));
+    } catch (e) {
+      console.log('Cannot read /var/task:', e);
+    }
+    try {
+      console.log('Files in /var/task/static:', readdirSync('/var/task/static'));
+    } catch (e) {
+      console.log('Cannot read /var/task/static:', e);
+    }
     const filePath = join(process.cwd(), 'static', 'users.json');
     console.log('Looking for users.json at:', filePath);
     let users: User[] = [];

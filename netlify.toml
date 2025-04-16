@@ -3,7 +3,7 @@
   publish = "dist"
 
 [functions]
-  included_files = ["static/users.json"]
+  included_files = ["static/*"]
 
 [[redirects]]
   from = "/login"
