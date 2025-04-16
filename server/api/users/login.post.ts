@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { defineEventHandler, readBody } from 'h3';
 
 type User = {
@@ -16,27 +14,13 @@ export default defineEventHandler(async (event) => {
     console.log('Login request body:', body);
     const { login, password } = body;
 
-    const { readdirSync } = await import('fs');
-    try {
-      console.log('Files in /var/task:', readdirSync('/var/task'));
-    } catch (e) {
-      console.log('Cannot read /var/task:', e);
-    }
-    try {
-      console.log('Files in /var/task/static:', readdirSync('/var/task/static'));
-    } catch (e) {
-      console.log('Cannot read /var/task/static:', e);
-    }
-    const filePath = join(process.cwd(), 'static', 'users.json');
-    console.log('Looking for users.json at:', filePath);
-    let users: User[] = [];
-    try {
-      const file = readFileSync(filePath, 'utf-8');
-      users = JSON.parse(file);
-    } catch (e) {
-      console.error('users.json read error:', e);
+    // Load users.json via HTTP request for universal compatibility (Netlify & local)
+    const baseUrl = process.env.URL || process.env.DEPLOY_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/users.json`);
+    if (!res.ok) {
       return { success: false, error: 'users.json not found or unreadable' };
     }
+    const users: User[] = await res.json();
     const user = users.find(u =>
       u.credentials &&
       u.credentials.username === login &&
