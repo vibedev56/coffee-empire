@@ -1,9 +1,6 @@
 [build]
   command = "npm run build"
-  publish = ".output/public"
-
-[functions]
-  included_files = ["static/*"]
+  publish = "dist"
 
 [[redirects]]
   from = "/login"
