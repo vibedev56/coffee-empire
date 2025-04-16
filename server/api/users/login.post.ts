@@ -15,19 +15,17 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     console.log('Login request body:', body);
     const { login, password } = body;
-    let file;
-    try {
-      file = readFileSync(join(process.cwd(), 'static', 'users.json'), 'utf-8');
-    } catch (e) {
-      console.error('Cannot read users.json:', e);
-      return { success: false, error: 'users.json not found or unreadable' };
-    }
+    const baseUrl = process.env.NUXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     let users: User[] = [];
     try {
-      users = JSON.parse(file);
+      const res = await fetch(`${baseUrl}/users.json`);
+      if (!res.ok) {
+        return { success: false, error: 'users.json not found or unreadable' };
+      }
+      users = await res.json();
     } catch (e) {
-      console.error('users.json is not valid JSON:', e);
-      return { success: false, error: 'users.json is not valid JSON' };
+      console.error('users.json fetch error:', e);
+      return { success: false, error: 'users.json not found or unreadable' };
     }
     const user = users.find(u =>
       u.credentials &&
