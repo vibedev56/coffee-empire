@@ -1,5 +1,5 @@
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import { defineEventHandler, readBody } from 'h3';
 
 type User = {
@@ -15,10 +15,12 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     console.log('Login request body:', body);
     const { login, password } = body;
+
+    const filePath = join(process.cwd(), 'static', 'users.json');
+    console.log('Looking for users.json at:', filePath);
     let users: User[] = [];
     try {
-      const usersPath = join(process.cwd(), 'static', 'users.json');
-      const file = await readFile(usersPath, 'utf-8');
+      const file = readFileSync(filePath, 'utf-8');
       users = JSON.parse(file);
     } catch (e) {
       console.error('users.json read error:', e);
