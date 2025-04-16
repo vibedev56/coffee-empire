@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     const { login, password } = body;
     let file;
     try {
-      file = readFileSync(join(process.cwd(), 'users.json'), 'utf-8');
+      file = readFileSync(join(process.cwd(), 'static', 'users.json'), 'utf-8');
     } catch (e) {
       console.error('Cannot read users.json:', e);
       return { success: false, error: 'users.json not found or unreadable' };
